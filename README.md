@@ -74,6 +74,20 @@ To contribute to the package please follow the guidelines [here](https://github.
 
 Please use this [link](https://github.com/ZijieZhaoMMHW/MSD/issues) to report any bugs found.
 
+Reference
+-------
+
+Coen, E., 1973. El floklore costarricense relativo al clima. Revista de la Universidad de Costa Rica.
+
+Curtis, S. (2002). Interannual variability of the bimodal distribution of summertime rainfall over Central America and tropical storm activity in the far-eastern Pacific. Climate Research, 22(2), 141-146.
+
+Hastenrath, S., 1967. Rainfall distribution and regime in Central America. Archiv für Meteorologie, Geophysik und Bioklimatologie, Serie B, 15(3), pp.201-241.
+
+Karnauskas, K. B., Seager, R., Giannini, A., & Busalacchi, A. J. (2013). A simple mechanism for the climatological midsummer drought along the Pacific coast of Central America. Atmósfera, 26(2), 261-281.
+
+Mosiño, P. and García, E., 1966. The midsummer droughts in Mexico. In Proc. Regional Latin American Conf (Vol. 3, pp. 500-516).
+
+
 Contact
 -------
 
