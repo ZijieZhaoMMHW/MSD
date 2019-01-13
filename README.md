@@ -59,6 +59,11 @@ Current Functions
 <td>The function to calculate composites for a particular dataset across a particular index.</td>
 <td>Zhao et al. in prep. </td>
 </tr>
+<tr class="even">
+<td><code>soh()</code></td>
+<td>The function to calculate the proportion of explained variance of rainy season precipitation by a second order harmonic.</td>
+<td>Curtis, 2005. </td>
+</tr>
 </tbody>
 </table>
 
