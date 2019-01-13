@@ -65,9 +65,9 @@ Current Functions
 Contributing to `MSD`
 -------
 
-To contribute to the package please follow the guidelines [here](https://github.com/ZijieZhaoMMHW/m_mhw1.0/blob/master/docs/Contributing_to_mmhw.md).
+To contribute to the package please follow the guidelines [here](https://github.com/ZijieZhaoMMHW/MSD/blob/master/docs/Contributing_to_MSD.md).
 
-Please use this [link](https://github.com/ZijieZhaoMMHW/m_mhw1.0/issues) to report any bugs found.
+Please use this [link](https://github.com/ZijieZhaoMMHW/MSD/issues) to report any bugs found.
 
 Contact
 -------
