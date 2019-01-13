@@ -1,7 +1,7 @@
 Changing History
 ==================================================================
 
-2018-12-14
+2019-1-14
 -------------
 
-Updating the algorithm to calculate the climatologies and thresholds with help from Maxime Marin (<Maxime.Marin@csiro.au>).
+Creating the github to store **`MSD`**.
