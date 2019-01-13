@@ -1,7 +1,7 @@
-Contributing to **`m_mhw`**
+Contributing to **`MSD`**
 ==================================================================
 
-Please see the guidelines below for contributions to the **`m_mhw`** package.
+Please see the guidelines below for contributions to the **`MSD`** package.
 
 Typos and grammatical errors
 ----------------
@@ -16,7 +16,7 @@ Should one want to propose a change or new feature, please file an issue through
 Code of Conduct
 ----------------
 
-Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ZijieZhao/see/blob/master/Code_of_Conduct.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ZijieZhaoMMHW/MSD/blob/master/docs/Code_of_Conduct.md). By participating in this project you agree to abide by its terms.
 
 
 
