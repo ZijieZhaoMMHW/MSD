@@ -45,22 +45,29 @@ Current Functions
 <td>Karnauskas et al. 2013</td>
 </tr>
 <tr class="odd">
-<td><code>categorize</code></td>
+<td><code>categorize()</code></td>
 <td>The function to categorize each MSD event into four periods. </td>
 <td>Zhao et al. in prep. </td>
 </tr>
 <tr class="even">
-<td><code>mean_states</code></td>
+<td><code>mean_states()</code></td>
 <td>The function to calculate mean states for a set of MSD properties. </td>
 <td>Zhao et al. in prep. </td>
 </tr>
 <tr class="odd">
-<td><code>composites</code></td>
+<td><code>composites()</code></td>
 <td>The function to calculate composites for a particular dataset across a particular index.</td>
 <td>Zhao et al. in prep. </td>
 </tr>
 </tbody>
 </table>
+
+Contributing to `MSD`
+-------
+
+To contribute to the package please follow the guidelines [here](https://github.com/ZijieZhaoMMHW/m_mhw1.0/blob/master/docs/Contributing_to_mmhw.md).
+
+Please use this [link](https://github.com/ZijieZhaoMMHW/m_mhw1.0/issues) to report any bugs found.
 
 Contact
 -------
