@@ -74,6 +74,11 @@ To contribute to the package please follow the guidelines [here](https://github.
 
 Please use this [link](https://github.com/ZijieZhaoMMHW/MSD/issues) to report any bugs found.
 
+Citation
+-------
+
+There is currently no publication about **`MSD`**, so if you use it in your research please refer to corresponding paper. When this toolbox is strong and complete enough I may try to find a journal (such as [The Jounral of Open Source Software](https://joss.theoj.org/papers) or [Environmetnal Modelling & Software](https://www.journals.elsevier.com/environmental-modelling-and-software/)) to publish it.
+
 Reference
 -------
 
