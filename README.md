@@ -41,7 +41,7 @@ Current Functions
 </tr>
 <tr class="even">
 <td><code>detect_monthly()</code></td>
-<td>The function to detect and quantify climatological MSD events using climatological monthly precipitation data, based on the definition given by </td>
+<td>The function to detect and quantify climatological MSD events using climatological monthly precipitation data, based on the definition given by Karnauskas et al. (2013). </td>
 <td>Karnauskas et al. 2013</td>
 </tr>
 <tr class="odd">
