@@ -49,7 +49,7 @@ vMetric = internal.stats.getParamVal(vMetric,MetricNames,...
 
 MSD=MSD{:,:};
 loc=unique(MSD(:,2:3),'rows');
-m=NaN(size(MSD,1),3);
+m=NaN(size(loc,1),3);
 m(:,1:2)=loc;
 
 switch vMetric
