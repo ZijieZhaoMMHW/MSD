@@ -12,4 +12,10 @@ Creating the github to store **`MSD`**.
 Adding a logo.
 Fixing a bug in **`mean_states`**.
 
+2019-1-16
+-------------
+
+Adding the function **`detect_mg()`**.
+Starting to write the `function_description.md` file.
+
 
