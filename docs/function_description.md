@@ -177,11 +177,104 @@ The major output **`MSD`** is a table containing many metrics, including:
 
 ### Examples
 
+Here we use the daily precipitation over land extracted from Climate Prediction Center (CPC) global unified gauge-based analysis of daily precipitation (Xie et al., 2007; Chen et al., 2008), during 1979 to 2017 in (0-30<sup>o</sup>N, 120-60<sup>o</sup>W).
 
+```
+% Read and reconstruct data
+precip=NaN(120,60,length(datenum(1979,1,1):datenum(2017,12,31)));
+for i=1979:2017
+    file_here=['precip_' num2str(i)];
+    load(file_here);
+    precip(:,:,(datenum(i,1,1):datenum(i,12,31))-datenum(1979,1,1)+1)=precip_here;
+    clear precip_here
+end
+time=(datenum(1979,1,1):datenum(2017,12,31))';
+size(precip,3)==length(time)
 
+ans =
+  logical
+   1
+% The time range is (1979,1,1) to (2017,12,31)
+```
 
+Then we load associated latitudes and run the **`detect_daily()`** function
+```
+load('loc');
+lat_full=repmat(lat',120,1);
+[MSD,precip_clim,imsd_climatology]...
+=detect_daily(precip,time,lat_full);
+```
 
+You would see something like following contents indicating the running of this algorithm.
+```
+...
+Determining the MSD area, current location: x25 y59
+Determining the MSD area, current location: x25 y60
+Determining the MSD area, current location: x26 y1
+Determining the MSD area, current location: x26 y2
+Determining the MSD area, current location: x26 y3
+Determining the MSD area, current location: x26 y4
+...
+```
 
+Let's have a look of the resultant outputs.
+
+MSD is a table containing each detected MSD signal. For example, we could see the 20th detected MSD signal existed in grid (35,1) during 1986. This signal started on the 154th day of year,ended on the 279th day of year, reaching its peak on the 211th day of year. Its intensity is ~0.59.
+
+```
+MSD(20,:)
+ans =
+  1×14 table
+    YEAR    XLOC    YLOC      ONSET       ONSET_D      ENDING      ENDING_D       PEAK       PEAK_D    Pmax      Pmin       P1       P2       imsd  
+    ____    ____    ____    __________    _______    __________    ________    __________    ______    _____    ______    ______    _____    _______
+    1986    35      1       7.2553e+05    154        7.2565e+05    279         7.2558e+05    211       5.966    2.4751    3.7682    5.966    0.58513
+```
+
+`imsd` is the <code>I<sub>msd</sub></code> calculated based on `precip_clim`, which is the smoothed climatology. We could plot it with the help from [m_map](https://www.eoas.ubc.ca/~rich/map.html).
+
+## `mean_states`
+
+### Algorithm description
+
+The function **`mean_states()`** is used to calculate the mean state of a particular MSD metric based on **`MSD`** returned by **`detect_daily()`**.
+
+### Inputs and Outputs
+
+Function **`mean_states()`** achieves this algorithm using some inputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="65%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Description</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>MSD</code></td>
+<td>Output from function <code>detect_daily()</code>.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>year_range</code></td>
+<td>A numeric vector containing two values indicating time range of MSD detection. E.G. [1979 2016].</td>
+<td>Necessary</td>
+</tr>
+<tr class="odd">
+<td><code>Metric</code></td>
+<td>Default is 'Frequency'. The MSD metric for which the mean state is calculated.</td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+
+The optional input **`Metric`** has 10 different cases, which are summarized in following table.
 
 
 
