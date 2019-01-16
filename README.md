@@ -64,6 +64,11 @@ Current Functions
 <td>The function to calculate the proportion of explained variance of rainy season precipitation by a second order harmonic.</td>
 <td>Curtis, 2005. </td>
 </tr>
+<tr class="odd">
+<td><code>detect_mg()</code></td>
+<td>The function to detect and quantify climatological MSD following definition given by Mosiño and García (1966).</td>
+<td>Mosiño and García, 1966. </td>
+</tr>
 </tbody>
 </table>
 
