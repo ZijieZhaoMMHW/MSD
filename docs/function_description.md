@@ -564,6 +564,112 @@ s.Label.String='mm/day';
 caxis([-4.2 4.2]);
 ```
 
+## `detect_monthly`
+
+### Algorithm description
+
+The function **`detect_monthly()`** is used to detect and quantify climatological MSD events based on monthly precipitation data in unit of mm/day based on the algorithm given by Karnauskas et al. (2013). 
+
+This algorithm is achieved following a protocol for data in each grid. Firstly, the monthly climatological precipitation is calculated and climatology in southern hemisphere is shifted. After that, the first two largest preicpitation are recorded as p1 and p2. If there are 1-3 months between p1 and p2, the time period between them are recorded as a MSD period and its intensity is quantified. If p1 and p2 are next to each other, the third largest precipitation would be found and it would be determined if there are 1-4 months between p3 and both p1 and p2. If so, the time period among p1, p2 and p3 is determined as a MSD period and its intensity is quantified. The intensity (or 'depth') of MSD periods is determined by calculating the reduction of rainfall during the minimum relative to the mean of the two rainfall maxima. One of the biggest advantage is that it does not have a priori assume for MSD periods.
+
+### Inputs and Outputs
+
+Function **`detect_monthly()`** achieves this algorithm using some inputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="65%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Description</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>precip</code></td>
+<td>3D monthly precipitation (mm/day) to detect MSD events, specified as a m-by-n-by-t matrix. m and n separately indicate two spatial dimensions and t indicates temporal dimension.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>time</code></td>
+<td>A numeric matrix in size of t-by-2. The first column indicates the corresponding year while the second column indicates the corresponding month (1 to 12).</td>
+<td>Necessary</td>
+</tr>
+<tr class="odd">
+<td><code>lat_full</code></td>
+<td>A numeric matrix (m-by-n) indicating latitude for PRECIP. This is actually used to distinguish the situation in northern/southern hemisphere so if you do not have exact latitude data please use positive/negative value for northern/southern hemisphere.</td>
+<td>Necessary</td>
+</tr>
+</tbody>
+</table>
+
+Function **`detect_monthly()`** returns some outputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>depth</code></td>
+<td>A numeric matrix (m-by-n) indicating the intensity (mm/day) for climatological MSD in each grid.</td>
+</tr>
+<tr class="even">
+<td><code>onset</code></td>
+<td>A numeric matrix (m-by-n) indicating the onset month for climatological MSD in each grid.</td>
+</tr>
+<tr class="odd">
+<td><code>ending</code></td>
+<td>A numeric matrix (m-by-n) indicating the ending month for climatological MSD in each grid.</td>
+</tr>
+</tbody>
+</table>
+
+### Examples
+
+Here we still use CPC precipitation during 1979-2016 to execute **`detect_monthly()`**. Firstly we need to transform daily data into monthly data by calculating averages.
+
+```
+date_used=datevec(datenum(1979,1,1):datenum(2017,12,31));
+u_y_m=unique(date_used(:,1:2),'rows');
+
+precip_month=NaN(120,60,size(u_y_m,1));
+
+for i=1:size(precip_month,3);
+    index_here=(date_used(:,1)==u_y_m(i,1) & date_used(:,2)==u_y_m(i,2));
+    precip_month(:,:,i)=nanmean(precip(:,:,index_here),3);
+end
+```
+
+Then we run the code and plot the depth.
+
+```
+[depth,onset,ending]=detect_monthly(precip_month,u_y_m,ones(120,60));
+
+figure('pos',[10 10 1000 1000]);
+m_proj('miller','lon',[180+60 180+120],'lat',[0 30]);
+m_contourf(lon,lat,depth',0:0.01:5,'linestyle','none');
+m_coast();
+m_grid('fontsize',16);
+colormap(jet);
+caxis([0 4.5]);
+s=colorbar('fontsize',16);
+s.Label.String='mm/day';
+```
+
+
 
 
 
