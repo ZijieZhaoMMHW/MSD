@@ -34,8 +34,10 @@ function m=mean_states(MSD,year_range,varargin)
 %
 %  Output Arguments
 %   
-%   m - A numeric matrix containing the mean state of a particular MSD
-%   metric in size of (m-by-n).
+%   m - A numeric matrix containing mean states of MSD metric in each grid.
+%   Each column of m corresponds to a particular MSD grid and three column
+%   separately indicate x_grid, y_grid and calculated mean state.
+
 
 paramNames = {'Metric'};
 defaults   = {'Frequency'};
