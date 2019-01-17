@@ -276,6 +276,300 @@ Function **`mean_states()`** achieves this algorithm using some inputs, which ar
 
 The optional input **`Metric`** has 10 different cases, which are summarized in following table.
 
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Frequency</code></td>
+<td>Calculating frequency (/year) of MSD events.</td>
+</tr>
+<tr class="even">
+<td><code>Onset</code></td>
+<td>Calculating mean states of onset date (day of year).</td>
+</tr>
+<tr class="odd">
+<td><code>End</code></td>
+<td>Calculating mean states of end date (day of year).</td>
+</tr>
+<tr class="even">
+<td><code>Peak</code></td>
+<td>Calculating mean states of peak date (day of year).</td>
+</tr>
+<tr class="odd">
+<td><code>Duration</code></td>
+<td>Calculating mean states of duration (days).</td>
+</tr>
+<tr class="even">
+<td><code>P1</code></td>
+<td>Calculating mean states of P1 (mm/day).</td>
+</tr>
+<tr class="odd">
+<td><code>P2</code></td>
+<td>Calculating mean states of P2 (mm/day).</td>
+</tr>
+<tr class="even">
+<td><code>P<sub>max</sub></code></td>
+<td>Calculating mean states of P<sub>max</sub> (mm/day).</td>
+</tr>
+<tr class="odd">
+<td><code>P<sub>min</sub></code></td>
+<td>Calculating mean states of P<sub>min</sub> (mm/day).</td>
+</tr>
+<tr class="even">
+<td><code>imsd</code></td>
+<td>Calculating mean states of I<sub>msd</sub>.</td>
+</tr>
+</tbody>
+</table>
+
+Function **`mean_states`** returns some outputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>m</code></td>
+<td>m - A numeric matrix containing mean states of MSD metric in each grid. Each column of m corresponds to a particular MSD grid and three column separately indicate x_grid, y_grid and calculated mean state.</td>
+</tr>
+</tbody>
+</table>
+
+### Examples
+
+Here we use **`MSD`** returned in the example in **`detect_daily`**. We know calculate and plot its frequency for MSD signals in each grid and plot it.
+
+Firstly we run the **`mean_states`** function with default metric frequency.
+
+```
+freq=mean_states(MSD,[1979 2017]);
+```
+
+We need to reconstruct it into spatial map.
+
+```
+freq_2d=NaN(120,60);
+
+for i=1:size(freq,1);
+    freq_2d(freq(i,1),freq(i,2))=freq(i,3);
+end
+```
+
+Then we plot it.
+
+```
+figure('pos',[10 10 1000 1000]);
+m_contourf(lon,lat,freq_2d',0:0.01:1,'linestyle','none');
+m_coast();
+m_grid;
+colormap(jet);
+s=colorbar('fontsize',16);
+s.Label.String='/year';
+caxis([0 1]);
+```
+
+## `categorize`
+
+### Algorithm description
+
+The function **`categorize`** is used to separate each detected MSD signal from **`detect_daily`** into four parts. A MSD signal has three important time points, including onset, end and peak dates. Period 1 (P1) is defined as onset date to the 30th percentile between onset and peak date (d30), P2 is d30 to peak date, P3 is peak date to 70th percentile between peak and end date (d70), while P4 is d70 to end date. Intuitively, P1 tends to cover the period representing the onset of MSD, so P1 could be intuitively named as 'Starting Period'. Similarly, P2 is 'Developing Period', P3 is 'Decreasing Period' and P4 is 'Ending Period'.
+
+### Inputs and Outputs
+
+Function **`categorize()`** achieves this algorithm using some inputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="65%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Description</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>MSD</code></td>
+<td>Output from function <code>detect_daily()</code>.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>threshold</code></td>
+<td>Default is 0.3. Threshold to calculate the percentile. For example, if threshold is 0.4, d30 would change to d40 and d70 would change to d60.</td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+
+Function **`categorize()`** returns some outputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>start_end_phase_4</code></td>
+<td>A 3D numeric matrix in size of m-by-4-by-2. m indicates the number of MSD events, 4 indicates four period of each MSD event, and 2 indicates start and end of each period. Each numeric value indicates a time in the format of <code>datenum()</code>. For example, <code>start_end_phase_4(20,3,2)</code> indicating the end time of period 3 for event 20.</td>
+</tr>
+</tbody>
+</table>
+
+### Examples
+
+We still use the output **`MSD`** in the example of **`detect_daily()`** to run function **`categorize`**.
+
+```
+phase_1_4=categorize(MSD);
+[datevec(phase_1_4(20,2,1));datevec(phase_1_4(20,2,2))]
+ans =
+        1986           6          10           0           0           0
+        1986           7          30           0           0           0
+```
+
+We could see the 20th event's period 2 started on (1986,6,10), ended on (1986,7,30).
+
+## **`composites`**
+
+The function **`composites()`** is used to calculate the average of a particular dataset across a particular index.
+
+### Algorithm description
+
+Skip.
+
+### Inputs and Outputs
+
+Function **`composites()`** achieves this algorithm using some inputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="65%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Description</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>d</code></td>
+<td>A 3D numeric matrix in size of m-by-n-by-t, where m and n correspond to spatial position and t correspond to temporal record.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>time</code></td>
+<td>A numeric vector indicating the time corresponding to <code>d</code> in the format of <code>datenum()</code>.</td>
+<td>Necessary</td>
+</tr>
+<tr class="odd">
+<td><code>index</code></td>
+<td>A numeric vector corresponding to a set of time for which you would like to calculate composites in the format of <code>datenum()</code>.</td>
+<td>Necessary</td>
+</tr>
+</tbody>
+</table>
+
+Function **`composites()`** returns some outputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>c</code></td>
+<td>m - A numeric matrix in size of m-by-n containing the calculated composites in each grid.</td>
+</tr>
+</tbody>
+</table>
+
+### Examples
+
+Here we calculate the composite of precipitation anomalies across onset dates for detected MSD signals.
+
+Firstly we need to calculate the precipitation anomalies.
+
+```
+precip_anom=NaN(120,60,size(precip,3));
+date_used=datevec(datenum(1979,1,1):datenum(2017,12,31));
+unique_m_d=unique(date_used(:,2:3),'rows');
+for i=1:size(unique_m_d,1);
+    index_here=(date_used(:,2)==unique_m_d(i,1) & date_used(:,3)==unique_m_d(i,2));
+    precip_anom(:,:,index_here)=precip(:,:,index_here)-nanmean(precip(:,:,index_here),3);
+end
+```
+
+Then we use the onset date from **`MSD`** to execute `composites()`.
+
+```
+MSD_m=MSD{:,:};
+onset_index=MSD_m(:,4);
+c_onset=composites(precip_anom,(datenum(1979,1,1):datenum(2017,12,31))',onset_index);
+c_onset(c_onset==0)=nan; % remove lands.
+```
+
+Plot it.
+
+```
+figure('pos',[10 10 1000 1000]);
+m_proj('miller','lon',[180+60 180+120],'lat',[0 30]);
+m_contourf(lon,lat,c_onset',-4.2:0.01:4.2,'linestyle','none');
+m_coast();
+m_grid('fontsize',16);
+color_b=[(linspace(0,1,32))' (linspace(0,1,32))' ones(32,1)];
+color_r=[ones(32,1) (linspace(1,0,32))' (linspace(1,0,32))'];
+color_here=[color_b;color_r];
+colormap(color_here);
+s=colorbar('fontsize',16);
+s.Label.String='mm/day';
+caxis([-4.2 4.2]);
+```
+
+
+
+
+
+
+
 
 
 
