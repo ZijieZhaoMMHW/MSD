@@ -669,7 +669,49 @@ s=colorbar('fontsize',16);
 s.Label.String='mm/day';
 ```
 
+## `detect_mg`
 
+### Algorithm description
+
+The function **`detect_mg()`** is used to detect and quantify climatological MSD following the definition given by Mosiño and García (1966). Similar approach has also been used in Perdigón‐Morales et al. (2018). 
+
+This algorithm is achieved by finding consecutive months during the traditionally defined rainy season (May–October) based on climatological monthly precipitation, which presents a decrease in mean monthly accumulated precipitation with respect to the 2 months of maximum precipitation that bound them. If two maximums are next to each other, there is no detected MSD duration. The intensity of MSD is quantified using RD index, referred to a quotient between the representative area of the deficit and the total accumulated precipitation from May to October, which is expressed as a percentage. The MSD is considered weak when RD<10%, moderate when 10%<=RD<16%, strong RD>=16. 
+
+### Inputs and Outputs
+
+Function **`detect_mg()`** achieves this algorithm using some inputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="65%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Description</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>MSD</code></td>
+<td>Output from function <code>detect_daily()</code>.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>year_range</code></td>
+<td>A numeric vector containing two values indicating time range of MSD detection. E.G. [1979 2016].</td>
+<td>Necessary</td>
+</tr>
+<tr class="odd">
+<td><code>Metric</code></td>
+<td>Default is 'Frequency'. The MSD metric for which the mean state is calculated.</td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
 
 
 
