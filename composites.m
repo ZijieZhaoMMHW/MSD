@@ -17,8 +17,8 @@ function c=composites(d,time,index)
 %   time - A numeric vector indicating the time corresponding to D in the
 %   format of datenum().
 %   
-%   index - A matrix in size of a-by-b. Each column should correspond to a
-%   numeric vector of time for which you would like to calculate composites
+%   index - A numeric vector corresponding to a
+%   set of time for which you would like to calculate composites
 %   in the format of datenum().
 %
 %  Output Arguments
