@@ -62,7 +62,7 @@ Current Functions
 <tr class="even">
 <td><code>soh()</code></td>
 <td>The function to calculate the proportion of explained variance of rainy season precipitation by a second order harmonic.</td>
-<td>Curtis, 2005. </td>
+<td>Curtis, 2002. </td>
 </tr>
 <tr class="odd">
 <td><code>detect_mg()</code></td>
