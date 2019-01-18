@@ -696,22 +696,155 @@ Function **`detect_mg()`** achieves this algorithm using some inputs, which are 
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>MSD</code></td>
-<td>Output from function <code>detect_daily()</code>.</td>
+<td><code>precip</code></td>
+<td>3D monthly precipitation (mm/day) to detect MSD events, specified as a m-by-n-by-t matrix. m and n separately indicate two spatial dimensions and t indicates temporal dimension.</td>
 <td>Necessary</td>
 </tr>
 <tr class="even">
-<td><code>year_range</code></td>
-<td>A numeric vector containing two values indicating time range of MSD detection. E.G. [1979 2016].</td>
+<td><code>time</code></td>
+<td>A 2D numeric matrix in size of t-by-2, where the first column indicates corresponding years and the second column indicates corresponding months.</td>
 <td>Necessary</td>
 </tr>
 <tr class="odd">
-<td><code>Metric</code></td>
-<td>Default is 'Frequency'. The MSD metric for which the mean state is calculated.</td>
+<td><code>lat_full</code></td>
+<td>A numeric matrix (m-by-n) indicating latitude for <code>precip</code>. This is actually used to distinguish the situation in northern/southern hemisphere so if you do not have exact latitude data please use positive/negative value for northern/southern hemisphere.</td>
+<td>Necessary</td>
+</tr>
+</tbody>
+</table>
+
+Function **`detect_mg()`** returns some outputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>dur</code></td>
+<td>A numeric matrix (m-by-n) containing the number of months during climatological MSD in each grid.</td>
+</tr>
+<tr class="even">
+<td><code>RD</code></td>
+<td>A numeric matrix (m-by-n) containing the quotient between the representative area of the deficit and the total accumulated precipitation from May to October.</td>
+</tr>
+<tr class="odd">
+<td><code>label</code></td>
+<td>A 2D cell (m-by-n) containing the label of MSD in each grid. 'weak' for RD(i,j)<0.1, 'moderate' for 0.1<=RD(i,j)<0.16, 'strong' for RD(i,j)>=0.16.</td>
+</tr>
+</tbody>
+</table>
+
+### Examples
+
+We still use the monthly precipitation reconstructed from CPC daily precipitation to run the code.
+
+```
+[dur,RD,label]=detect_mg(precip_month,u_y_m,ones(120,60));
+
+figure('pos',[10 10 1000 1000]);
+m_proj('miller','lon',[180+60 180+120],'lat',[0 30]);
+m_contourf(lon,lat,RD',0:0.01:1,'linestyle','none');
+m_coast();
+m_grid('fontsize',16);
+colormap(jet);
+caxis([0 0.7]);
+s=colorbar('fontsize',16);
+s.Label.String='';
+```
+
+## `soh`
+
+### Algorithm description
+
+The function **`soh()`** is achieved by applying a second-order harmonic (SOH) to climatological preicpitation in traditionally defined rainy season (May to Oct for nothern hemisphere; Nov to Apr for southern hemisphere). A well modelled SOH during this period should be shaped as a sinusoidal wave with 2 peaks and 2 troughs, representing a well-shaped biomodal distribution of precipitation. Therefore, it is reasonable to use the explained variance of rainy season climatological precipitation by SOH to quantify the strength of biomodal precipitation distribution for a particular precipitation time series. Similar approach has been used in Curtis (2005).
+
+### Inputs and Outputs
+
+Function **`soh()`** achieves this algorithm using some inputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="65%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Description</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>precip</code></td>
+<td>3D daily precipitation (mm/day) in size of m-by-n-by-t.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>time</code></td>
+<td>A numeric vector (length t) corresponding to the time of <code>precip</code> in the format of <code>datenum()</code>.</td>
+<td>Necessary</td>
+</tr>
+<tr class="odd">
+<td><code>lat_full</code></td>
+<td>A numeric matrix (m-by-n) indicating latitude for <code>precip</code>. This is actually used to distinguish the situation in northern/southern hemisphere so if you do not have exact latitude data please use positive/negative value for northern/southern hemisphere.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>smoothwidth</code></td>
+<td>Default is 1. Width of window to smooth calculated climatological precipitation</td>
 <td>Optional</td>
 </tr>
 </tbody>
 </table>
+
+Function **`soh()`** returns some outputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>expv</code></td>
+<td>A numeric matrix (in size of m-by-n, ranging from 0 to 1) containing proportion of explained variance of daily precipitation in rainy season by a second order harmonic.</td>
+</tr>
+</tbody>
+</table>
+
+### Examples
+
+We use the daily CPC precipitation to run the code.
+
+```
+expv=soh(precip,(datenum(1979,1,1):datenum(2017,12,31))',ones(120,60));
+figure('pos',[10 10 1000 1000]);
+m_proj('miller','lon',[180+60 180+120],'lat',[0 30]);
+m_contourf(lon,lat,expv',0:0.01:1,'linestyle','none');
+m_coast();
+m_grid('fontsize',16);
+colormap(jet);
+caxis([0 0.7]);
+s=colorbar('fontsize',16);
+s.Label.String='';
+```
+
 
 
 
