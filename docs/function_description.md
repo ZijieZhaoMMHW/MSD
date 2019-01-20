@@ -845,6 +845,91 @@ s=colorbar('fontsize',16);
 s.Label.String='';
 ```
 
+## `detect_quadrant`
+
+### Algorithm description
+
+The function **`detect_quadrant()`** is to calculate the bimodal index (BI) based on annual monthly precipitation data. BI is defined using a quadrantal approach. Considering a coordinate system origining at July, the precipitation in June and August should be separately located in quadrant II and I. On the other hand, if the precipitation in June is in quadrant III or that in August is in quadrant IV, the biomodal signal 
+
+### Inputs and Outputs
+
+Function **`soh()`** achieves this algorithm using some inputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="65%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Description</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>precip</code></td>
+<td>3D daily precipitation (mm/day) in size of m-by-n-by-t.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>time</code></td>
+<td>A numeric vector (length t) corresponding to the time of <code>precip</code> in the format of <code>datenum()</code>.</td>
+<td>Necessary</td>
+</tr>
+<tr class="odd">
+<td><code>lat_full</code></td>
+<td>A numeric matrix (m-by-n) indicating latitude for <code>precip</code>. This is actually used to distinguish the situation in northern/southern hemisphere so if you do not have exact latitude data please use positive/negative value for northern/southern hemisphere.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>smoothwidth</code></td>
+<td>Default is 1. Width of window to smooth calculated climatological precipitation</td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+
+Function **`soh()`** returns some outputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>expv</code></td>
+<td>A numeric matrix (in size of m-by-n, ranging from 0 to 1) containing proportion of explained variance of daily precipitation in rainy season by a second order harmonic.</td>
+</tr>
+</tbody>
+</table>
+
+### Examples
+
+We use the daily CPC precipitation to run the code.
+
+```
+expv=soh(precip,(datenum(1979,1,1):datenum(2017,12,31))',ones(120,60));
+figure('pos',[10 10 1000 1000]);
+m_proj('miller','lon',[180+60 180+120],'lat',[0 30]);
+m_contourf(lon,lat,expv',0:0.01:1,'linestyle','none');
+m_coast();
+m_grid('fontsize',16);
+colormap(jet);
+caxis([0 0.7]);
+s=colorbar('fontsize',16);
+s.Label.String='';
+```
+
 
 
 
