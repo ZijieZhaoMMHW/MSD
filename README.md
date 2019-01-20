@@ -69,6 +69,11 @@ Current Functions
 <td>The function to detect and quantify climatological MSD following definition given by Mosiño and García (1966).</td>
 <td>Mosiño and García, 1966. </td>
 </tr>
+<tr class="even">
+<td><code>detect_quadrant()</code></td>
+<td>The function to calculate biomodal index of annual monthly precipitation.</td>
+<td>Angeles et al., 2010. </td>
+</tr>
 </tbody>
 </table>
 
