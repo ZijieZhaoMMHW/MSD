@@ -849,11 +849,11 @@ s.Label.String='';
 
 ### Algorithm description
 
-The function **`detect_quadrant()`** is to calculate the bimodal index (BI) based on annual monthly precipitation data. BI is defined using a quadrantal approach. Considering a coordinate system origining at July, the precipitation in June and August should be separately located in quadrant II and I. On the other hand, if the precipitation in June is in quadrant III or that in August is in quadrant IV, the biomodal signal 
+The function **`detect_quadrant()`** is to calculate the bimodal index (BI) based on annual monthly precipitation data. BI is defined using a quadrantal approach. Considering a coordinate system origining at July, the precipitation in June and August should be separately located in quadrant II and I. On the other hand, if the precipitation in June is in quadrant III or that in August is in quadrant IV, the biomodal signal tends to disappear. Based on this conjecture, a bimodal factor (BF) could be introduced as follows. BF is 1 when the precipitation in June and August is in quadrant II and I, BF is 0 when they are both located on axes, BF is -1 otherwise. After that, the BI is determined as `BI=BF*(PJ+PA)/(PJ<sub>clim</sub>+PA<sub>clim</sub>)`, where PJ and PA are monthly precipitation (mm/day) in June and August, and <sub>clim</sub> indicates climatologies. When BI>=1, bimodal precipitation appears. 
 
 ### Inputs and Outputs
 
-Function **`soh()`** achieves this algorithm using some inputs, which are summarized in following table.
+Function **`detect_quadrant()`** achieves this algorithm using some inputs, which are summarized in following table.
 
 <table>
 <colgroup>
@@ -871,28 +871,43 @@ Function **`soh()`** achieves this algorithm using some inputs, which are summar
 <tbody>
 <tr class="odd">
 <td><code>precip</code></td>
-<td>3D daily precipitation (mm/day) in size of m-by-n-by-t.</td>
+<td>3D monthly precipitation (mm/day) in size of m-by-n-by-t.</td>
 <td>Necessary</td>
 </tr>
 <tr class="even">
 <td><code>time</code></td>
-<td>A numeric vector (length t) corresponding to the time of <code>precip</code> in the format of <code>datenum()</code>.</td>
+<td> A numeric matrix in size of t-by-2. The first column indicates the corresponding year while the second column indicates the corresponding month (1 to 12).</td>
 <td>Necessary</td>
 </tr>
 <tr class="odd">
 <td><code>lat_full</code></td>
-<td>A numeric matrix (m-by-n) indicating latitude for <code>precip</code>. This is actually used to distinguish the situation in northern/southern hemisphere so if you do not have exact latitude data please use positive/negative value for northern/southern hemisphere.</td>
+<td> A numeric matrix (m-by-n) indicating latitude for PRECIP. This is actually used to distinguish the situation in northern/southern hemisphere so if you do not have exact latitude data please use positive/negative value for northern/southern hemisphere.</td>
 <td>Necessary</td>
 </tr>
 <tr class="even">
-<td><code>smoothwidth</code></td>
-<td>Default is 1. Width of window to smooth calculated climatological precipitation</td>
+<td><code>clim_start</code></td>
+<td> Default is the first row of TIME. The starting time for the calculation of climatology.</td>
+<td>Optional</td>
+</tr>
+<tr class="odd">
+<td><code>clim_end</code></td>
+<td> Default is the last row of TIME. The ending time for the calculation of climatology.</td>
+<td>Optional</td>
+</tr>
+<tr class="even">
+<td><code>msd_start</code></td>
+<td> Default is the first year with complete annual precipitation. The starting year for BI calculation.</td>
+<td>Optional</td>
+</tr>
+<tr class="odd">
+<td><code>msd_end</code></td>
+<td> Default is the last year with complete annual precipitation. The ending year for BI calculation.</td>
 <td>Optional</td>
 </tr>
 </tbody>
 </table>
 
-Function **`soh()`** returns some outputs, which are summarized in following table.
+Function **`detect_quadrant()`** returns some outputs, which are summarized in following table.
 
 <table>
 <colgroup>
@@ -907,25 +922,25 @@ Function **`soh()`** returns some outputs, which are summarized in following tab
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>expv</code></td>
-<td>A numeric matrix (in size of m-by-n, ranging from 0 to 1) containing proportion of explained variance of daily precipitation in rainy season by a second order harmonic.</td>
+<td><code>BI</code></td>
+<td> A 3D numeric matrix (in size of m-by-n-by-(msd_end-msd_start+1)) containing calculated biomodal index.</td>
 </tr>
 </tbody>
 </table>
 
 ### Examples
 
-We use the daily CPC precipitation to run the code.
+We still use the monthly precipitation to run the code.
 
 ```
-expv=soh(precip,(datenum(1979,1,1):datenum(2017,12,31))',ones(120,60));
+BI=detect_quadrant(precip_month,u_y_m,ones(120,60));
 figure('pos',[10 10 1000 1000]);
 m_proj('miller','lon',[180+60 180+120],'lat',[0 30]);
-m_contourf(lon,lat,expv',0:0.01:1,'linestyle','none');
+m_contourf(lon,lat,(nanmean(BI,3))',-1:0.01:1,'linestyle','none');
 m_coast();
 m_grid('fontsize',16);
-colormap(jet);
-caxis([0 0.7]);
+colormap(color_here);
+caxis([-1 1]);
 s=colorbar('fontsize',16);
 s.Label.String='';
 ```
