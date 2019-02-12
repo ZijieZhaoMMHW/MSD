@@ -86,7 +86,7 @@ precip_for_clim=precip(:,:,(vclim_start:vclim_end)-time(1)+1);
 %% calculating climatology
 u_m_d=unique(date_used(:,2:3),'rows');
 
-precip_clim=NaN(120,60,366);
+precip_clim=NaN(size(precip,1),size(precip,2),366);
 
 fprintf('Calculating the climatology\n');
 
@@ -98,9 +98,9 @@ end
 precip_clim_sm=smoothdata(precip_clim,3,'gaussian',vsmoothwidth);
 
 %% determining the MSD area
-binary_msd=NaN(120,60);
+binary_msd=NaN(size(precip,1),size(precip,2));
 
-imsd_climatology=NaN(120,60);
+imsd_climatology=NaN(size(precip,1),size(precip,2));
 
 
 for i=1:size(precip_clim_sm,1);
