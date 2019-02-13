@@ -76,6 +76,11 @@ Current Functions
 <td>The function to calculate bimodal index of annual monthly precipitation.</td>
 <td>Angeles et al., 2010. </td>
 </tr>
+<tr class="odd">
+<td><code>detect_monthly_updated()</code></td>
+<td>Daily version of <code>detect_monthly</code>.</td>
+<td>Karnauskas et al. 2013 </td>
+</tr>
 </tbody>
 </table>
 
