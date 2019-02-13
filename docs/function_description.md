@@ -959,6 +959,102 @@ s.Label.String='';
 
 ![Image text](https://github.com/ZijieZhaoMMHW/MSD/blob/master/figure_example/example_7.png)
 
+## `detect_monthly_updated`
+
+### Algorithm description
+
+The function **`detect_monthly_updated()`** is updated version of function **`detect_monthly()`** adapted to daily version.
+
+### Inputs and Outputs
+
+Function **`detect_monthly_updated()`** achieves this algorithm using some inputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="65%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Description</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>precip</code></td>
+<td>3D daily precipitation (mm/day) in size of m-by-n-by-t.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>time</code></td>
+<td> A numeric vector corresponding to the time of precip in the format of <code>datenum()</code>.</td>
+<td>Necessary</td>
+</tr>
+<tr class="odd">
+<td><code>lat_full</code></td>
+<td> A numeric matrix (m-by-n) indicating latitude for PRECIP. This is actually used to distinguish the situation in northern/southern hemisphere so if you do not have exact latitude data please use positive/negative value for northern/southern hemisphere.</td>
+<td>Necessary</td>
+</tr>
+<tr class="even">
+<td><code>smoothwidth</code></td>
+<td> The width of window to smooth climatological precipitation.</td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+
+Function **`detect_monthly_updated()`** returns some outputs, which are summarized in following table.
+
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>depth</code></td>
+<td>A numeric matrix (m-by-n) indicating the intensity (mm/day) for climatological MSD in each grid.</td>
+</tr>
+<tr class="even">
+<td><code>onset</code></td>
+<td>A numeric matrix (m-by-n) indicating the onset day of year for climatological MSD in each grid.</td>
+</tr>
+<tr class="odd">
+<td><code>ending</code></td>
+<td>A numeric matrix (m-by-n) indicating the ending day of year for climatological MSD in each grid.</td>
+</tr>
+</tbody>
+</table>
+
+### Examples
+
+We still use the daily precipitation to run the code.
+
+```
+[depth,onset,ending]=detect_monthly_updated(precip,(datenum(1979,1,1):datenum(2017,12,31))',ones(120,60));
+
+figure('pos',[10 10 1000 1000]);
+m_proj('miller','lon',[180+60 180+120],'lat',[0 30]);
+m_contourf(lon,lat,depth',0:0.01:20,'linestyle','none');
+m_coast();
+m_grid('fontsize',16);
+colormap(jet);
+caxis([0 2.5]);
+s=colorbar('fontsize',16);
+s.Label.String='mm/day';
+```
+
+![Image text](https://github.com/ZijieZhaoMMHW/MSD/blob/master/figure_example/example_8.png)
+
 
 
 
