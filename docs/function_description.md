@@ -232,6 +232,8 @@ ans =
 
 `imsd` is the <code>I<sub>msd</sub></code> calculated based on `precip_clim`, which is the smoothed climatology. We could plot it with the help from [m_map](https://www.eoas.ubc.ca/~rich/map.html).
 
+![Image text](https://github.com/ZijieZhaoMMHW/MSD/blob/master/figure_example/example_1.png)
+
 ## `mean_states`
 
 ### Algorithm description
@@ -384,6 +386,8 @@ s=colorbar('fontsize',16);
 s.Label.String='/year';
 caxis([0 1]);
 ```
+
+![Image text](https://github.com/ZijieZhaoMMHW/MSD/blob/master/figure_example/example_2.png)
 
 ## `categorize`
 
@@ -564,6 +568,8 @@ s.Label.String='mm/day';
 caxis([-4.2 4.2]);
 ```
 
+![Image text](https://github.com/ZijieZhaoMMHW/MSD/blob/master/figure_example/example_3.png)
+
 ## `detect_monthly`
 
 ### Algorithm description
@@ -669,6 +675,8 @@ s=colorbar('fontsize',16);
 s.Label.String='mm/day';
 ```
 
+![Image text](https://github.com/ZijieZhaoMMHW/MSD/blob/master/figure_example/example_4.png)
+
 ## `detect_mg`
 
 ### Algorithm description
@@ -760,6 +768,8 @@ s=colorbar('fontsize',16);
 s.Label.String='';
 ```
 
+![Image text](https://github.com/ZijieZhaoMMHW/MSD/blob/master/figure_example/example_5.png)
+
 ## `soh`
 
 ### Algorithm description
@@ -844,6 +854,8 @@ caxis([0 0.7]);
 s=colorbar('fontsize',16);
 s.Label.String='';
 ```
+
+![Image text](https://github.com/ZijieZhaoMMHW/MSD/blob/master/figure_example/example_6.png)
 
 ## `detect_quadrant`
 
@@ -944,6 +956,8 @@ caxis([-1 1]);
 s=colorbar('fontsize',16);
 s.Label.String='';
 ```
+
+![Image text](https://github.com/ZijieZhaoMMHW/MSD/blob/master/figure_example/example_7.png)
 
 
 
