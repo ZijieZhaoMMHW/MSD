@@ -84,6 +84,8 @@ Current Functions
 </tbody>
 </table>
 
+Detailed descriptions and examples of functions could be found [here](https://github.com/ZijieZhaoMMHW/MSD/blob/master/docs/function_description.md).
+
 Contributing to `MSD`
 -------
 
