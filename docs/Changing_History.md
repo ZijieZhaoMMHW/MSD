@@ -18,4 +18,9 @@ Fixing a bug in **`mean_states`**.
 Adding the function **`detect_mg()`**.
 Starting to write the `function_description.md` file.
 
+2019-3-22
+-------------
+
+Updating algorithms in many functions....
+
 
