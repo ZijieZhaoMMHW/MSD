@@ -2,6 +2,7 @@ MSD <img src="https://github.com/ZijieZhaoMMHW/MSD/blob/master/docs/logo_msd.png
 ==================================================================
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1c171c80979e40e9b2f7e63874835ba1)](https://app.codacy.com/app/ZijieZhaoMMHW/MSD?utm_source=github.com&utm_medium=referral&utm_content=ZijieZhaoMMHW/MSD&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1c171c80979e40e9b2f7e63874835ba1)](https://app.codacy.com/app/ZijieZhaoMMHW/MSD?utm_source=github.com&utm_medium=referral&utm_content=ZijieZhaoMMHW/MSD&utm_campaign=Badge_Grade_Settings)
 
 Different from normal rainy condition in northern hemisphere (Hastenrath, 1967), the climatological and annual precipitation over Central America and Mexico are widely dominated by a bimodal precipitation, shaped by two peaks separately during May to July and August to October and a relative trough during between this two peaks, named as midsummer drought (MSD) (Mosiño and García, 1966; Coen, 1973). This phenomenon has been identified and studied for a long time but there are still many unresolved problems around it, includng both mechanism and characteristics. This could be caused by many reasons including the absence of a practical protocol to identify and detect MSD signals. 
 
