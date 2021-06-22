@@ -23,4 +23,7 @@ Starting to write the `function_description.md` file.
 
 Updating algorithms in many functions....
 
+2021-6-22
+-------------
+Updating **`detect_quadrant`** function
 
